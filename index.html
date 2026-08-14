@@ -216,6 +216,17 @@
     <div class="sec-head"><span class="sec-num">01</span><h2>ข้อมูลร่างกาย &amp; NEAT</h2></div>
     <div class="panel">
       <div class="grid" id="bodyInputs"></div>
+      <div class="sec-note" style="margin:16px 0 8px;">เป้าหมาย Deficit / Surplus ของแต่ละแผน</div>
+      <div class="grid">
+        <div class="field">
+          <label>Lean Cut — Deficit (kcal/วัน)<span class="hint">หักจาก TDEE ของแต่ละ NEAT</span></label>
+          <input type="number" id="leanCutDeficit" value="250" step="10">
+        </div>
+        <div class="field">
+          <label>Recomp — Deficit/Surplus (kcal/วัน)<span class="hint">บวก = deficit, ลบ = surplus</span></label>
+          <input type="number" id="recompAdjust" value="0" step="10">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -233,28 +244,9 @@
     </div>
   </section>
 
-  <!-- ============ SECTION 3: Exercise table ============ -->
+  <!-- ============ SECTION 3: TDEE by day ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">03</span><h2>ตารางท่าออกกำลังกาย</h2></div>
-    <div class="sec-note">ปรับประเภทท่า (Compound/Isolation) และจำนวนเซ็ตได้ต่อแถว — ท่าแรกของแต่ละวันมักมี warm-up เพิ่ม เวลารวม/พลังงานคำนวณสดตามค่าใน Section 02</div>
-    <div class="table-scroll">
-      <table id="exerciseTable">
-        <thead>
-          <tr>
-            <th>วัน</th><th>ท่า</th><th>ประเภท</th>
-            <th class="num">Warm-up sets</th><th class="num">Working sets</th>
-            <th class="num">เวลา (นาที)</th><th class="num">EEE (kcal)</th>
-          </tr>
-        </thead>
-        <tbody id="exerciseBody"></tbody>
-        <tfoot id="exerciseFoot"></tfoot>
-      </table>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 4: TDEE by day ============ -->
-  <section>
-    <div class="sec-head"><span class="sec-num">04</span><h2>TDEE รายวัน — 2 สถานการณ์ NEAT</h2></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>TDEE รายวัน — 2 สถานการณ์ NEAT</h2></div>
     <div class="sec-note">Maintenance (ก่อน TEF) = BMR + NEAT + EEE &nbsp;|&nbsp; TDEE จริง = Maintenance / (1 &minus; TEF rate)</div>
     <div class="table-scroll">
       <table id="tdeeTable">
@@ -270,19 +262,15 @@
     </div>
   </section>
 
-  <!-- ============ SECTION 5 & 6: Diet Plans ============ -->
+  <!-- ============ SECTION 4 & 5: Diet Plans ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">05</span><h2>แผนโภชนาการ</h2></div>
-    <div class="sec-note">Intake = TDEE (แต่ละ NEAT) &minus; Deficit target &nbsp;|&nbsp; EA check = (Intake &minus; EEE) / FFM &nbsp;|&nbsp; Protein คงที่ตาม g/kg, ไขมัน % ของ intake, คาร์บเติมส่วนที่เหลือ</div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>แผนโภชนาการ</h2></div>
+    <div class="sec-note">Intake = TDEE (แต่ละ NEAT) &minus; Deficit target &nbsp;|&nbsp; EA check = (Intake &minus; EEE) / FFM &nbsp;|&nbsp; Protein คงที่ตาม g/kg, ไขมัน % ของ intake, คาร์บเติมส่วนที่เหลือ &nbsp;|&nbsp; ปรับตัวเลข Deficit/Surplus ได้ที่ Section 01</div>
 
     <div class="two-col">
       <div>
         <div class="plan-head">
           <div><strong style="font-size:14px;">Lean Cut</strong><div class="muted" style="font-size:11.5px;">ลดไขมันต่อเนื่อง แบบกันชน EA</div></div>
-          <div class="field">
-            <label>Deficit target (kcal/วัน)<span class="hint">หักจาก TDEE ของแต่ละ NEAT</span></label>
-            <input type="number" id="leanCutDeficit" value="250" step="10">
-          </div>
         </div>
         <div class="table-scroll">
           <table id="leanCutTable">
@@ -298,10 +286,6 @@
       <div>
         <div class="plan-head">
           <div><strong style="font-size:14px;">Recomp</strong><div class="muted" style="font-size:11.5px;">รักษา/สร้างกล้ามเนื้อ เน้น EA สูงขึ้น</div></div>
-          <div class="field">
-            <label>Deficit / Surplus (kcal/วัน)<span class="hint">บวก = deficit, ลบ = surplus</span></label>
-            <input type="number" id="recompAdjust" value="0" step="10">
-          </div>
         </div>
         <div class="table-scroll">
           <table id="recompTable">
@@ -316,9 +300,9 @@
     </div>
   </section>
 
-  <!-- ============ SECTION 7: Macros ============ -->
+  <!-- ============ SECTION 5: Macros ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">06</span><h2>มาโครรายวัน</h2></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>มาโครรายวัน</h2></div>
     <div class="table-scroll">
       <table id="macroTable">
         <thead>
@@ -329,6 +313,25 @@
           </tr>
         </thead>
         <tbody id="macroBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6: Exercise table (moved to bottom) ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>ตารางท่าออกกำลังกาย</h2></div>
+    <div class="sec-note">ปรับประเภทท่า (Compound/Isolation) และจำนวนเซ็ตได้ต่อแถว — ท่าแรกของแต่ละวันมักมี warm-up เพิ่ม เวลารวม/พลังงานคำนวณสดตามค่าใน Section 02</div>
+    <div class="table-scroll">
+      <table id="exerciseTable">
+        <thead>
+          <tr>
+            <th>วัน</th><th>ท่า</th><th>ประเภท</th>
+            <th class="num">Warm-up sets</th><th class="num">Working sets</th>
+            <th class="num">เวลา (นาที)</th><th class="num">EEE (kcal)</th>
+          </tr>
+        </thead>
+        <tbody id="exerciseBody"></tbody>
+        <tfoot id="exerciseFoot"></tfoot>
       </table>
     </div>
   </section>
