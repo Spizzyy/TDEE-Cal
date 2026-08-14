@@ -2,7 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ปรับ viewport เพื่อป้องกันการซูมอัตโนมัติบน iPhone -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>TDEE / EEE Readout</title>
 <style>
   :root{
@@ -116,6 +117,7 @@
 
   .table-scroll{ -webkit-overflow-scrolling:touch; }
 
+  /* ปรับแต่งสำหรับ iPhone/Mobile */
   @media (max-width:640px){
     .wrap{ padding:18px 12px 60px; }
     h1{ font-size:21px; }
@@ -126,7 +128,10 @@
     .grid{ grid-template-columns:1fr 1fr; gap:10px; }
     .sec-head h2{ font-size:13.5px; }
     table{ font-size:11.8px; }
-    td input[type=number]{ width:52px; padding:6px 5px; font-size:12px; }
+    /* ขยาย font-size เป็น 16px สำหรับ input เพื่อป้องกัน iOS zoom และขยายความกว้าง */
+    td input[type=number]{ width:56px; padding:6px 5px; font-size:16px; }
+    td select { font-size: 16px; }
+    input[type=number], input[type=text], select { font-size:16px; }
     .plan-head{ flex-direction:column; align-items:flex-start; }
     .plan-head .field{ max-width:none; width:100%; }
   }
@@ -156,60 +161,9 @@
     </div>
   </section>
 
-  <!-- ============ SECTION 2: EEE model ============ -->
+  <!-- ============ SECTION 2 & 3: Diet Plans (Moved Up) ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">02</span><h2>โมเดลคำนวณ EEE (แคลอรี่จากการออกกำลังกาย)</h2></div>
-    <div class="sec-note">เลือกวิธีคิด EEE ที่จะใช้เลี้ยง TDEE — Flat-MET คือ MET เดียวคูณเวลาทั้งเซสชัน (ง่าย แต่มักสูงเกินจริงถ้าพักยาว)
-      ส่วน Bottom-Up คิดจากเวลาออกแรง+เวลาพักจริงทีละเซ็ต (แม่นกว่าเมื่อพักยาวแบบ RIR ใกล้ failure)</div>
-    <div class="panel">
-      <div class="radio-row" style="margin-bottom:16px;">
-        <label><input type="radio" name="eeeMethod" value="bottomup" checked> Bottom-Up (คิดจากเซ็ต/พักจริง)</label>
-        <label><input type="radio" name="eeeMethod" value="flat"> Flat-MET (MET เดียว x เวลาทั้งเซสชัน)</label>
-      </div>
-      <div class="grid" id="eeeModelInputs"></div>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 3: Exercise table ============ -->
-  <section>
-    <div class="sec-head"><span class="sec-num">03</span><h2>ตารางท่าออกกำลังกาย</h2></div>
-    <div class="sec-note">ปรับประเภทท่า (Compound/Isolation) และจำนวนเซ็ตได้ต่อแถว — ท่าแรกของแต่ละวันมักมี warm-up เพิ่ม เวลารวม/พลังงานคำนวณสดตามค่าใน Section 02</div>
-    <div class="table-scroll">
-      <table id="exerciseTable">
-        <thead>
-          <tr>
-            <th>วัน</th><th>ท่า</th><th>ประเภท</th>
-            <th class="num">Warm-up sets</th><th class="num">Working sets</th>
-            <th class="num">เวลา (นาที)</th><th class="num">EEE (kcal)</th>
-          </tr>
-        </thead>
-        <tbody id="exerciseBody"></tbody>
-        <tfoot id="exerciseFoot"></tfoot>
-      </table>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 4: TDEE by day ============ -->
-  <section>
-    <div class="sec-head"><span class="sec-num">04</span><h2>TDEE รายวัน — 2 สถานการณ์ NEAT</h2></div>
-    <div class="sec-note">Maintenance (ก่อน TEF) = BMR + NEAT + EEE &nbsp;|&nbsp; TDEE จริง = Maintenance / (1 &minus; TEF rate)</div>
-    <div class="table-scroll">
-      <table id="tdeeTable">
-        <thead>
-          <tr>
-            <th>วัน</th><th>เซสชัน</th><th class="num">EEE</th>
-            <th class="num">TDEE NEAT-Low</th><th class="num">TDEE NEAT-High</th>
-          </tr>
-        </thead>
-        <tbody id="tdeeBody"></tbody>
-        <tfoot id="tdeeFoot"></tfoot>
-      </table>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 5 & 6: Diet Plans ============ -->
-  <section>
-    <div class="sec-head"><span class="sec-num">05</span><h2>แผนโภชนาการ</h2></div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>แผนโภชนาการ (สรุป Intake)</h2></div>
     <div class="sec-note">Intake = TDEE (แต่ละ NEAT) &minus; Deficit target &nbsp;|&nbsp; EA check = (Intake &minus; EEE) / FFM &nbsp;|&nbsp; Protein คงที่ตาม g/kg, ไขมัน % ของ intake, คาร์บเติมส่วนที่เหลือ</div>
 
     <div class="two-col">
@@ -253,9 +207,9 @@
     </div>
   </section>
 
-  <!-- ============ SECTION 7: Macros ============ -->
+  <!-- ============ SECTION 3: Macros (Moved Up) ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">06</span><h2>มาโครรายวัน</h2></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>มาโครรายวัน</h2></div>
     <div class="table-scroll">
       <table id="macroTable">
         <thead>
@@ -266,6 +220,57 @@
           </tr>
         </thead>
         <tbody id="macroBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4: TDEE by day ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>TDEE รายวัน — 2 สถานการณ์ NEAT</h2></div>
+    <div class="sec-note">Maintenance (ก่อน TEF) = BMR + NEAT + EEE &nbsp;|&nbsp; TDEE จริง = Maintenance / (1 &minus; TEF rate)</div>
+    <div class="table-scroll">
+      <table id="tdeeTable">
+        <thead>
+          <tr>
+            <th>วัน</th><th>เซสชัน</th><th class="num">EEE</th>
+            <th class="num">TDEE NEAT-Low</th><th class="num">TDEE NEAT-High</th>
+          </tr>
+        </thead>
+        <tbody id="tdeeBody"></tbody>
+        <tfoot id="tdeeFoot"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5: EEE model ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>โมเดลคำนวณ EEE (แคลอรี่จากการออกกำลังกาย)</h2></div>
+    <div class="sec-note">เลือกวิธีคิด EEE ที่จะใช้เลี้ยง TDEE — Flat-MET คือ MET เดียวคูณเวลาทั้งเซสชัน (ง่าย แต่มักสูงเกินจริงถ้าพักยาว)
+      ส่วน Bottom-Up คิดจากเวลาออกแรง+เวลาพักจริงทีละเซ็ต (แม่นกว่าเมื่อพักยาวแบบ RIR ใกล้ failure)</div>
+    <div class="panel">
+      <div class="radio-row" style="margin-bottom:16px;">
+        <label><input type="radio" name="eeeMethod" value="bottomup" checked> Bottom-Up (คิดจากเซ็ต/พักจริง)</label>
+        <label><input type="radio" name="eeeMethod" value="flat"> Flat-MET (MET เดียว x เวลาทั้งเซสชัน)</label>
+      </div>
+      <div class="grid" id="eeeModelInputs"></div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6: Exercise table ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>ตารางท่าออกกำลังกาย</h2></div>
+    <div class="sec-note">ปรับประเภทท่า (Compound/Isolation) และจำนวนเซ็ตได้ต่อแถว — ท่าแรกของแต่ละวันมักมี warm-up เพิ่ม เวลารวม/พลังงานคำนวณสดตามค่าใน Section 05</div>
+    <div class="table-scroll">
+      <table id="exerciseTable">
+        <thead>
+          <tr>
+            <th>วัน</th><th>ท่า</th><th>ประเภท</th>
+            <th class="num">Warm-up sets</th><th class="num">Working sets</th>
+            <th class="num">เวลา (นาที)</th><th class="num">EEE (kcal)</th>
+          </tr>
+        </thead>
+        <tbody id="exerciseBody"></tbody>
+        <tfoot id="exerciseFoot"></tfoot>
       </table>
     </div>
   </section>
@@ -298,14 +303,14 @@ const DAYS = [
   {key:'mon', label:'จ (Mon)', session:'Push', flatMin:60, flatMET:6.0},
   {key:'tue', label:'อ (Tue)', session:'Pull + Rear Delt', flatMin:60, flatMET:6.0},
   {key:'wed', label:'พ (Wed)', session:'Legs (Strength)', flatMin:55, flatMET:7.0},
-  {key:'thu', label:'พฤ (Thu)', session:'Upper (Volume & Shape)', flatMin:60, flatMET:6.0},
-  {key:'fri', label:'ศ (Fri)', session:'Cardio + Abs', flatMin:60, flatMET:null}, // computed from components
+  {key:'thu', label:'พฤ (Thu)', session:'Cardio + Abs', flatMin:60, flatMET:null}, // สลับมาเป็น Cardio + Abs
+  {key:'fri', label:'ศ (Fri)', session:'Upper (Volume & Shape)', flatMin:60, flatMET:6.0}, // สลับมาเป็น Upper
   {key:'sat', label:'ส (Sat)', session:'Legs (เหมือนวันพุธ)', flatMin:55, flatMET:7.0},
   {key:'sun', label:'อา (Sun)', session:'Rest', flatMin:0, flatMET:0},
 ];
 
-// Flat-MET components for Friday (abs + cardio) used only in Flat-MET mode
-const FRI_FLAT = [ {min:30, met:3.5}, {min:30, met:5.0} ];
+// Flat-MET components for Thursday (abs + cardio) used only in Flat-MET mode
+const THU_FLAT = [ {min:30, met:3.5}, {min:30, met:5.0} ];
 
 const EXERCISES_INIT = [
   {day:'mon', name:'Incline Smith 45', cat:'Compound', warm:2, work:3},
@@ -333,19 +338,21 @@ const EXERCISES_INIT = [
   {day:'wed', name:'Hip Abduction Machine', cat:'Isolation', warm:0, work:3},
   {day:'wed', name:'Seated Calf', cat:'Isolation', warm:0, work:3},
 
-  {day:'thu', name:'Incline Smith 30', cat:'Compound', warm:2, work:3},
-  {day:'thu', name:'Incline Chest Fly (Pec Deck)', cat:'Isolation', warm:0, work:3},
-  {day:'thu', name:'Lat Pulldown', cat:'Compound', warm:0, work:3},
-  {day:'thu', name:'Seated Row', cat:'Compound', warm:0, work:3},
-  {day:'thu', name:'Side Lateral', cat:'Isolation', warm:0, work:3},
-  {day:'thu', name:'Reverse Fly', cat:'Isolation', warm:0, work:3},
-  {day:'thu', name:'Biceps (curl variation)', cat:'Isolation', warm:0, work:3},
-  {day:'thu', name:'Triceps (extension variation)', cat:'Isolation', warm:0, work:3},
+  // สลับท่าของ Cardio + Abs มาเป็นวันพฤหัสบดี
+  {day:'thu', name:'Leg Raise', cat:'Isolation', warm:2, work:3},
+  {day:'thu', name:'Machine Crunch', cat:'Isolation', warm:0, work:3},
+  {day:'thu', name:'Abs Rotation Machine', cat:'Isolation', warm:0, work:3},
+  {day:'thu', name:'เดินชัน / Bike Zone 2 (30 นาที ต่อเนื่อง)', cat:'Cardio', warm:0, work:0, cardioMin:30, cardioMET:5.0},
 
-  {day:'fri', name:'Leg Raise', cat:'Isolation', warm:2, work:3},
-  {day:'fri', name:'Machine Crunch', cat:'Isolation', warm:0, work:3},
-  {day:'fri', name:'Abs Rotation Machine', cat:'Isolation', warm:0, work:3},
-  {day:'fri', name:'เดินชัน / Bike Zone 2 (30 นาที ต่อเนื่อง)', cat:'Cardio', warm:0, work:0, cardioMin:30, cardioMET:5.0},
+  // สลับท่าของ Upper มาเป็นวันศุกร์
+  {day:'fri', name:'Incline Smith 30', cat:'Compound', warm:2, work:3},
+  {day:'fri', name:'Incline Chest Fly (Pec Deck)', cat:'Isolation', warm:0, work:3},
+  {day:'fri', name:'Lat Pulldown', cat:'Compound', warm:0, work:3},
+  {day:'fri', name:'Seated Row', cat:'Compound', warm:0, work:3},
+  {day:'fri', name:'Side Lateral', cat:'Isolation', warm:0, work:3},
+  {day:'fri', name:'Reverse Fly', cat:'Isolation', warm:0, work:3},
+  {day:'fri', name:'Biceps (curl variation)', cat:'Isolation', warm:0, work:3},
+  {day:'fri', name:'Triceps (extension variation)', cat:'Isolation', warm:0, work:3},
 
   {day:'sat', name:'Hack Squat', cat:'Compound', warm:2, work:3},
   {day:'sat', name:'DB Sumo Squat', cat:'Compound', warm:0, work:3},
@@ -416,7 +423,7 @@ function dayBottomUpMin(dayKey){
   return exercises.filter(e=>e.day===dayKey).reduce((s,e)=>s+exerciseTimeMin(e),0);
 }
 function dayFlatEEE(day){
-  if(day.key==='fri') return FRI_FLAT.reduce((s,c)=>s + c.met*kcalFactor()*c.min, 0);
+  if(day.key==='thu') return THU_FLAT.reduce((s,c)=>s + c.met*kcalFactor()*c.min, 0); // ปรับเป็น thu
   return day.flatMET * kcalFactor() * day.flatMin;
 }
 function dayEEE(day){
