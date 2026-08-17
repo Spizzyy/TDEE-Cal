@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#12151a">
-<title>TDEE / EEE Readout</title>
+<title>Spizzy TDEE Calculator</title>
 <style>
   :root{
     --bg:#12151a;
@@ -191,7 +191,7 @@
 
   <header>
     <div class="eyebrow">Body Composition &rarr; Energy Model</div>
-    <h1>TDEE / EEE / NEAT / TEF Readout</h1>
+    <h1>TDEE / EEE / NEAT / TEF For intake</h1>
     <div class="sub">กรอกค่าของคุณเอง (BMR, FFM, น้ำหนัก, พฤติกรรมเดิน, สมมติฐานการฝึก) ระบบคำนวณ TDEE รายวัน 2 สถานการณ์ NEAT
       แล้วแนะนำ intake สำหรับแผน Lean Cut และ Recomp พร้อมเช็ค Energy Availability (EA) ให้อัตโนมัติ</div>
 
@@ -220,11 +220,11 @@
       <div class="grid">
         <div class="field">
           <label>Lean Cut — Deficit (kcal/วัน)<span class="hint">หักจาก TDEE ของแต่ละ NEAT</span></label>
-          <input type="number" id="leanCutDeficit" value="250" step="10">
+          <input type="number" id="leanCutDeficit" value="150" step="10">
         </div>
         <div class="field">
           <label>Recomp — Deficit/Surplus (kcal/วัน)<span class="hint">บวก = deficit, ลบ = surplus</span></label>
-          <input type="number" id="recompAdjust" value="0" step="10">
+          <input type="number" id="recompAdjust" value="-50" step="10">
         </div>
       </div>
     </div>
@@ -355,7 +355,7 @@ const DEFAULTS = {
   eeeMethod: 'bottomup',
   workSec: 40, warmupWorkSec: 30, restCompoundSec: 90, restIsolationSec: 90, restWarmupSec: 90,
   metCompound: 8, metIsolation: 6, metWarmup: 6, metRest: 2.5,
-  leanCutDeficit: 150, recompAdjust: 0,
+  leanCutDeficit: 150, recompAdjust: -50,
   kcalPerKgFat: 7700
 };
 let state = {...DEFAULTS};
@@ -397,7 +397,7 @@ const EXERCISES_INIT = [
   {day:'wed', name:'DB Sumo Squat', cat:'Compound', warm:0, work:3},
   {day:'wed', name:'Leg Extension Machine', cat:'Isolation', warm:0, work:3},
   {day:'wed', name:'Leg Curl Machine', cat:'Isolation', warm:0, work:3},
-  {day:'wed', name:'Hip Abduction Machine', cat:'Isolation', warm:0, work:3},
+  {day:'wed', name:'Hip Abduction Machine', cat:'Isolation', warm:0, work:6},
   {day:'wed', name:'Seated Calf', cat:'Isolation', warm:0, work:3},
 
   {day:'thu', name:'Leg Raise', cat:'Isolation', warm:2, work:3},
@@ -418,7 +418,7 @@ const EXERCISES_INIT = [
   {day:'sat', name:'DB Sumo Squat', cat:'Compound', warm:0, work:3},
   {day:'sat', name:'Leg Extension Machine', cat:'Isolation', warm:0, work:3},
   {day:'sat', name:'Leg Curl Machine', cat:'Isolation', warm:0, work:3},
-  {day:'sat', name:'Hip Abduction Machine', cat:'Isolation', warm:0, work:3},
+  {day:'sat', name:'Hip Abduction Machine', cat:'Isolation', warm:0, work:6},
   {day:'sat', name:'Seated Calf', cat:'Isolation', warm:0, work:3},
 ];
 let exercises = EXERCISES_INIT.map(e => ({...e}));
