@@ -2,8 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<!-- ปรับ viewport สำหรับ iOS -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12151a">
@@ -28,21 +27,14 @@
     --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'JetBrains Mono', Consolas, monospace;
     --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif;
   }
-  *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-  }
-  html{
-    overscroll-behavior-y:contain;
-    -webkit-text-size-adjust: 100%; /* ป้องกัน iOS ขยายตัวหนังสือเอง */
-    touch-action: manipulation;
-  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{ overscroll-behavior-y:contain; }
   body{
     margin:0; background:var(--bg); color:var(--text);
     font-family:var(--sans); line-height:1.5;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden; width:100%;
-    touch-action: manipulation;
+    touch-action:manipulation;
   }
   .wrap{
     max-width:1200px; margin:0 auto; width:100%;
@@ -83,64 +75,34 @@
   .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:12px; }
   .field label{ display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px; }
   .field label .hint{ display:block; color:var(--text-dim); font-size:10px; margin-top:1px; font-weight:400; }
-  
-  /* ปรับ font-size เป็น 16px สำหรับหน้าจอเล็ก เพื่อไม่ให้ iOS Auto-Zoom */
   input[type=number], input[type=text], select{
     width:100%; background:var(--panel-alt); border:1px solid var(--border); color:var(--text);
-    border-radius:6px; padding:8px 10px; font-family:var(--mono); font-size:14px;
-    -webkit-appearance: none;
-  }
-  @media(max-width:768px){
-    input[type=number], input[type=text], select{ font-size:16px; }
+    border-radius:6px; padding:8px 10px; font-family:var(--mono); font-size:13px;
   }
   input[type=number]:focus, select:focus, input[type=text]:focus{ outline:none; border-color:var(--accent); }
   input[type=radio]{ accent-color:var(--accent); margin-right:6px; }
   .radio-row{ display:flex; gap:16px; align-items:center; font-size:13px; color:var(--text-muted); flex-wrap:wrap;}
   .radio-row label{ display:flex; align-items:center; cursor:pointer; }
 
-  /* ---------- tables (ปรับปรุงประสิทธิภาพ iOS Scroll & Alignment) ---------- */
-  .table-scroll{ 
-    overflow-x:auto; 
-    border:1px solid var(--border-soft); 
-    border-radius:10px; 
-    -webkit-overflow-scrolling:touch; 
-    width:100%;
-  }
-  table{ 
-    width:100%; 
-    border-collapse:collapse; 
-    font-size:12.5px; 
-    min-width:550px; 
-  }
-  
-  /* กำหนดขนาดเฉพาะของแต่ละตารางเพื่อไม่ให้เพี้ยนบน iPhone */
-  #leanCutTable, #recompTable { min-width: 480px; }
-  #macroTable { min-width: 580px; }
-  #exerciseTable { min-width: 620px; }
-
+  /* ---------- tables ---------- */
+  .table-scroll{ overflow-x:auto; border:1px solid var(--border-soft); border-radius:10px; -webkit-overflow-scrolling:touch; }
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:600px; }
   thead th{
     text-align:left; font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase;
     color:var(--text-dim); background:var(--panel-alt); padding:10px; border-bottom:1px solid var(--border);
-    white-space:nowrap; position:sticky; top:0; z-index:2;
+    white-space:nowrap; position:sticky; top:0;
   }
-  tbody td{ 
-    padding:8px 10px; 
-    border-bottom:1px solid var(--border-soft); 
-    vertical-align:middle; 
-    white-space:nowrap; /* ป้องกันการตกบรรทัดบน iPhone */
-  }
+  tbody td{ padding:8px 10px; border-bottom:1px solid var(--border-soft); vertical-align:middle; }
   tbody tr:last-child td{ border-bottom:none; }
   tbody tr.day-start td{ border-top:1px solid var(--border); }
   tbody tr:hover{ background:rgba(255,255,255,.02); }
   td.num, th.num{ text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; }
-  
-  td input[type=number]{ width:60px; padding:5px; font-size:13px; text-align:right; }
-  td select{ padding:5px; font-size:13px; min-width:90px;}
-  
+  td input[type=number]{ width:60px; padding:5px; font-size:12px; text-align:right; }
+  td select{ padding:5px; font-size:12px; min-width:90px;}
   .day-tag{ font-family:var(--mono); color:var(--accent); font-size:11.5px; }
   .muted{ color:var(--text-dim); }
   .computed{ color:var(--text); }
-  tfoot td{ padding:10px; font-family:var(--mono); font-weight:600; border-top:1px solid var(--border); background:var(--panel-alt); white-space:nowrap; }
+  tfoot td{ padding:10px; font-family:var(--mono); font-weight:600; border-top:1px solid var(--border); background:var(--panel-alt); }
 
   .pill{ display:inline-block; padding:2px 8px; border-radius:20px; font-size:10.5px; font-family:var(--mono); }
   .pill.good{ background:var(--good-dim); color:var(--good); }
@@ -343,28 +305,9 @@
 </div>
 
 <script>
-/* ================= DISABLE ZOOM FOR IOS SAFARI ================= */
-document.addEventListener('gesturestart', function (e) {
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('touchmove', function (e) {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (e) {
-  const now = (new Date()).getTime();
-  if (now - lastTouchEnd <= 300) {
-    // ป้องกัน Double Tap Zoom ในส่วนที่ไม่ใช่ Input
-    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
-      e.preventDefault();
-    }
-  }
-  lastTouchEnd = now;
-}, false);
+/* ================= LOCAL STORAGE KEYS ================= */
+const STORAGE_KEY_STATE = 'spizzy_tdee_state';
+const STORAGE_KEY_EXERCISES = 'spizzy_tdee_exercises';
 
 /* ================= STATE & DATA ================= */
 const DEFAULTS = {
@@ -440,6 +383,37 @@ const EXERCISES_INIT = [
   {day:'sat', name:'Seated Calf', cat:'Isolation', warm:0, work:3},
 ];
 let exercises = EXERCISES_INIT.map(e => ({...e}));
+
+/* ================= STORAGE FUNCTIONS ================= */
+function saveToLocalStorage() {
+  try {
+    const stateToSave = {
+      ...state,
+      leanCutDeficit: parseFloat(document.getElementById('leanCutDeficit').value) || 0,
+      recompAdjust: parseFloat(document.getElementById('recompAdjust').value) || 0
+    };
+    localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(stateToSave));
+    localStorage.setItem(STORAGE_KEY_EXERCISES, JSON.stringify(exercises));
+  } catch (e) {
+    console.error('ไม่สามารถบันทึกข้อมูลลง LocalStorage ได้:', e);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const savedState = localStorage.getItem(STORAGE_KEY_STATE);
+    const savedExercises = localStorage.getItem(STORAGE_KEY_EXERCISES);
+
+    if (savedState) {
+      state = { ...DEFAULTS, ...JSON.parse(savedState) };
+    }
+    if (savedExercises) {
+      exercises = JSON.parse(savedExercises);
+    }
+  } catch (e) {
+    console.error('ไม่สามารถโหลดข้อมูลจาก LocalStorage ได้:', e);
+  }
+}
 
 /* ================= INPUT DEFINITIONS ================= */
 const BODY_FIELDS = [
@@ -705,9 +679,25 @@ function readStateFromInputs(){
 }
 
 function init(){
+  // 1. โหลดข้อมูลเดิมจาก LocalStorage ก่อน
+  loadFromLocalStorage();
+
+  // 2. สร้าง Input Grid พร้อมใส่ค่าที่บันทึกไว้
   buildInputGrid(document.getElementById('bodyInputs'), BODY_FIELDS);
   buildInputGrid(document.getElementById('eeeModelInputs'), EEE_FIELDS);
 
+  // ตั้งค่า UI อื่นๆ ตามค่าใน state
+  if (document.querySelector(`input[name=eeeMethod][value="${state.eeeMethod}"]`)) {
+    document.querySelector(`input[name=eeeMethod][value="${state.eeeMethod}"]`).checked = true;
+  }
+  if (state.leanCutDeficit !== undefined) {
+    document.getElementById('leanCutDeficit').value = state.leanCutDeficit;
+  }
+  if (state.recompAdjust !== undefined) {
+    document.getElementById('recompAdjust').value = state.recompAdjust;
+  }
+
+  // 3. ผูก Event Listener เมื่อเปลี่ยนค่าให้สั่ง saveToLocalStorage()
   document.addEventListener('input', (e)=>{
     if(e.target.matches('#exerciseBody input, #exerciseBody select')){
       const idx = e.target.dataset.idx;
@@ -716,29 +706,41 @@ function init(){
         const val = (field==='cat') ? e.target.value : parseFloat(e.target.value)||0;
         exercises[idx][field] = val;
       }
+      saveToLocalStorage();
       renderAll(true);
       return;
     }
     if(e.target.closest('#bodyInputs') || e.target.closest('#eeeModelInputs') ||
        e.target.id==='leanCutDeficit' || e.target.id==='recompAdjust'){
       readStateFromInputs();
+      saveToLocalStorage();
     }
     renderAll();
   });
   
   document.addEventListener('change', (e)=>{
-    if(e.target.name === 'eeeMethod'){ readStateFromInputs(); renderAll(); }
+    if(e.target.name === 'eeeMethod'){ 
+      readStateFromInputs(); 
+      saveToLocalStorage();
+      renderAll(); 
+    }
   });
 
+  // 4. ปุ่ม Reset ค่าเริ่มต้น -> ล้าง LocalStorage ออกด้วย
   document.getElementById('resetBtn').addEventListener('click', ()=>{
-    state = {...DEFAULTS};
-    exercises = EXERCISES_INIT.map(e=>({...e}));
-    buildInputGrid(document.getElementById('bodyInputs'), BODY_FIELDS);
-    buildInputGrid(document.getElementById('eeeModelInputs'), EEE_FIELDS);
-    document.querySelector('input[name=eeeMethod][value="bottomup"]').checked = true;
-    document.getElementById('leanCutDeficit').value = DEFAULTS.leanCutDeficit;
-    document.getElementById('recompAdjust').value = DEFAULTS.recompAdjust;
-    renderAll();
+    if (confirm('คุณต้องการรีเซ็ตค่ากลับเป็นค่าเริ่มต้นทั้งหมดใช่หรือไม่?')) {
+      localStorage.removeItem(STORAGE_KEY_STATE);
+      localStorage.removeItem(STORAGE_KEY_EXERCISES);
+
+      state = {...DEFAULTS};
+      exercises = EXERCISES_INIT.map(e=>({...e}));
+      buildInputGrid(document.getElementById('bodyInputs'), BODY_FIELDS);
+      buildInputGrid(document.getElementById('eeeModelInputs'), EEE_FIELDS);
+      document.querySelector('input[name=eeeMethod][value="bottomup"]').checked = true;
+      document.getElementById('leanCutDeficit').value = DEFAULTS.leanCutDeficit;
+      document.getElementById('recompAdjust').value = DEFAULTS.recompAdjust;
+      renderAll();
+    }
   });
 
   document.getElementById('btnShowLC').addEventListener('click', ()=>{
@@ -757,6 +759,7 @@ function init(){
   readStateFromInputs();
   renderAll();
 }
+
 init();
 </script>
 </body>
