@@ -685,8 +685,8 @@ function renderReadout(){
   `;
 }
 
-function renderAll(skipExercise = false){
-  if(!skipExercise) renderExerciseTable();
+function renderAll(){
+  renderExerciseTable();
   renderTDEETable();
   renderPlanTable('leanCutBody','leanCutFoot', parseFloat(document.getElementById('leanCutDeficit').value)||0);
   renderPlanTable('recompBody','recompFoot', parseFloat(document.getElementById('recompAdjust').value)||0);
@@ -734,7 +734,7 @@ function init(){
         exercises[idx][field] = val;
       }
       saveToLocalStorage();
-      renderAll(true);
+      renderAll();
       return;
     }
     if(e.target.closest('#bodyInputs') || e.target.closest('#eeeModelInputs') ||
