@@ -2,7 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- ป้องกันการซูมด้วย Meta Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12151a">
@@ -28,20 +29,26 @@
     --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html{ overscroll-behavior-y:contain; }
+  
+  /* ป้องกัน Double Tap Zoom ด้วย CSS */
+  html{ 
+    overscroll-behavior-y:contain; 
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+  }
   body{
     margin:0; background:var(--bg); color:var(--text);
     font-family:var(--sans); line-height:1.5;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden; width:100%;
-    touch-action:manipulation;
+    touch-action: manipulation;
   }
   .wrap{
     max-width:1200px; margin:0 auto; width:100%;
     padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(60px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   }
 
-  /* ---------- header / readout strip ---------- */
+  /* ---------- Header / Readout Strip ---------- */
   header{ margin-bottom:24px; }
   .eyebrow{
     font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
@@ -62,7 +69,7 @@
   }
   .readout .val small{ font-size:13px; color:var(--text-muted); font-weight:400; text-shadow:none; margin-left:4px;}
 
-  /* ---------- section shells ---------- */
+  /* ---------- Section Shells ---------- */
   section{ margin-top:30px; }
   .sec-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; border-bottom:1px solid var(--border-soft); padding-bottom:8px;}
   .sec-num{ font-family:var(--mono); color:var(--accent-soft); font-size:13px; }
@@ -71,20 +78,27 @@
 
   .panel{ background:var(--panel); border:1px solid var(--border-soft); border-radius:10px; padding:16px; }
 
-  /* ---------- input grid ---------- */
+  /* ---------- Input Grid ---------- */
   .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:12px; }
   .field label{ display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px; }
   .field label .hint{ display:block; color:var(--text-dim); font-size:10px; margin-top:1px; font-weight:400; }
+  
+  /* ตั้งค่า 16px บนมือถือเพื่อป้องกัน iOS Auto-Zoom เมื่อแตะพิมพ์ */
   input[type=number], input[type=text], select{
     width:100%; background:var(--panel-alt); border:1px solid var(--border); color:var(--text);
-    border-radius:6px; padding:8px 10px; font-family:var(--mono); font-size:13px;
+    border-radius:6px; padding:8px 10px; font-family:var(--mono); font-size:16px; 
+  }
+  @media (min-width: 768px) {
+    input[type=number], input[type=text], select {
+      font-size: 13px;
+    }
   }
   input[type=number]:focus, select:focus, input[type=text]:focus{ outline:none; border-color:var(--accent); }
   input[type=radio]{ accent-color:var(--accent); margin-right:6px; }
   .radio-row{ display:flex; gap:16px; align-items:center; font-size:13px; color:var(--text-muted); flex-wrap:wrap;}
   .radio-row label{ display:flex; align-items:center; cursor:pointer; }
 
-  /* ---------- tables ---------- */
+  /* ---------- Tables ---------- */
   .table-scroll{ overflow-x:auto; border:1px solid var(--border-soft); border-radius:10px; -webkit-overflow-scrolling:touch; }
   table{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:600px; }
   thead th{
@@ -97,8 +111,8 @@
   tbody tr.day-start td{ border-top:1px solid var(--border); }
   tbody tr:hover{ background:rgba(255,255,255,.02); }
   td.num, th.num{ text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; }
-  td input[type=number]{ width:60px; padding:5px; font-size:12px; text-align:right; }
-  td select{ padding:5px; font-size:12px; min-width:90px;}
+  td input[type=number]{ width:60px; padding:5px; font-size:14px; text-align:right; }
+  td select{ padding:5px; font-size:13px; min-width:90px;}
   .day-tag{ font-family:var(--mono); color:var(--accent); font-size:11.5px; }
   .muted{ color:var(--text-dim); }
   .computed{ color:var(--text); }
@@ -108,8 +122,8 @@
   .pill.good{ background:var(--good-dim); color:var(--good); }
   .pill.warn{ background:var(--warn-dim); color:var(--warn); }
 
-  .two-col{ display:grid; grid-template-columns:1fr; gap:20px; }
-  @media(min-width:900px){ .two-col{ grid-template-columns:1fr 1fr; } }
+  .two-col{ display:flex; flex-direction:column; gap:20px; }
+  @media(min-width:900px){ .two-col{ display:grid; grid-template-columns:1fr 1fr; } }
 
   .plan-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:10px;}
   .plan-head .field{ max-width:220px; }
@@ -123,7 +137,7 @@
   }
   .btn:hover{ border-color:var(--accent); color:var(--accent); }
 
-  /* ---------- top intake summary ---------- */
+  /* ---------- Top Intake Summary ---------- */
   .top-intake{
     margin-bottom:20px; border:1px solid var(--accent-soft); border-radius:12px;
     background:linear-gradient(180deg, rgba(255,178,56,.07), transparent 60%); padding:14px 16px 8px;
@@ -305,6 +319,23 @@
 </div>
 
 <script>
+/* ดักจับ Event ป้องกัน Pinch Zoom บน iOS Safari */
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+/* ดักจับ Event ป้องกัน Double-tap Zoom บน iOS Safari */
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'SELECT' && event.target.tagName !== 'TEXTAREA') {
+      event.preventDefault();
+    }
+  }
+  lastTouchEnd = now;
+}, false);
+
 /* ================= LOCAL STORAGE KEYS ================= */
 const STORAGE_KEY_STATE = 'spizzy_tdee_state';
 const STORAGE_KEY_EXERCISES = 'spizzy_tdee_exercises';
@@ -679,14 +710,11 @@ function readStateFromInputs(){
 }
 
 function init(){
-  // 1. โหลดข้อมูลเดิมจาก LocalStorage ก่อน
   loadFromLocalStorage();
 
-  // 2. สร้าง Input Grid พร้อมใส่ค่าที่บันทึกไว้
   buildInputGrid(document.getElementById('bodyInputs'), BODY_FIELDS);
   buildInputGrid(document.getElementById('eeeModelInputs'), EEE_FIELDS);
 
-  // ตั้งค่า UI อื่นๆ ตามค่าใน state
   if (document.querySelector(`input[name=eeeMethod][value="${state.eeeMethod}"]`)) {
     document.querySelector(`input[name=eeeMethod][value="${state.eeeMethod}"]`).checked = true;
   }
@@ -697,7 +725,6 @@ function init(){
     document.getElementById('recompAdjust').value = state.recompAdjust;
   }
 
-  // 3. ผูก Event Listener เมื่อเปลี่ยนค่าให้สั่ง saveToLocalStorage()
   document.addEventListener('input', (e)=>{
     if(e.target.matches('#exerciseBody input, #exerciseBody select')){
       const idx = e.target.dataset.idx;
@@ -726,7 +753,6 @@ function init(){
     }
   });
 
-  // 4. ปุ่ม Reset ค่าเริ่มต้น -> ล้าง LocalStorage ออกด้วย
   document.getElementById('resetBtn').addEventListener('click', ()=>{
     if (confirm('คุณต้องการรีเซ็ตค่ากลับเป็นค่าเริ่มต้นทั้งหมดใช่หรือไม่?')) {
       localStorage.removeItem(STORAGE_KEY_STATE);
